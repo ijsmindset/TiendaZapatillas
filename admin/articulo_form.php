@@ -16,7 +16,8 @@ $articulo = [
     'talla' => '',
     'precio' => '',
     'stock' => 0,
-    'descripcion' => ''
+    'descripcion' => '',
+    'imagen' => '' 
 ];
 
 // Si llega un id por la URL cargamos ese articulo como modo edicion
@@ -38,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $precio      = (float) $_POST['precio'];
     $stock       = (int) $_POST['stock'];
     $descripcion = trim($_POST['descripcion']);
+    $imagen      = trim($_POST['imagen']); 
 
     if ($nombre === "" || $precio <= 0) {
         $error = "El nombre y un precio valido son obligatorios.";
@@ -46,24 +48,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // EDITAR
             $stmt = $pdo->prepare("UPDATE articulos SET
                 nombre = :nombre, marca = :marca, talla = :talla,
-                precio = :precio, stock = :stock, descripcion = :descripcion
+                precio = :precio, stock = :stock, descripcion = :descripcion,
+                imagen = :imagen
                 WHERE id = :id");
             $stmt->execute([
                 ':nombre' => $nombre, ':marca' => $marca, ':talla' => $talla,
                 ':precio' => $precio, ':stock' => $stock,
-                ':descripcion' => $descripcion, ':id' => $articulo['id']
+                ':descripcion' => $descripcion, ':imagen' => $imagen,
+                ':id' => $articulo['id']
             ]);
             header("Location: articulos.php?msg=Articulo actualizado");
             exit;
         } else {
             // CREAR
             $stmt = $pdo->prepare("INSERT INTO articulos
-                (nombre, marca, talla, precio, stock, descripcion)
-                VALUES (:nombre, :marca, :talla, :precio, :stock, :descripcion)");
+                (nombre, marca, talla, precio, stock, descripcion, imagen)
+                VALUES (:nombre, :marca, :talla, :precio, :stock, :descripcion, :imagen)");
             $stmt->execute([
                 ':nombre' => $nombre, ':marca' => $marca, ':talla' => $talla,
                 ':precio' => $precio, ':stock' => $stock,
-                ':descripcion' => $descripcion
+                ':descripcion' => $descripcion, ':imagen' => $imagen
             ]);
             header("Location: articulos.php?msg=Articulo creado");
             exit;
@@ -95,6 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <label>Descripcion</label>
     <textarea name="descripcion" rows="3"><?= htmlspecialchars($articulo['descripcion']) ?></textarea>
+
+    <!-- NUEVO CAMPO IMAGEN -->
+    <label>URL de la imagen</label>
+    <input type="text" name="imagen" value="<?= htmlspecialchars($articulo['imagen'] ?? '') ?>" placeholder="Ej: /tienda_zapatillas/assets/img/airmax.jpg">
 
     <br><br>
     <button type="submit" class="btn">Guardar</button>
