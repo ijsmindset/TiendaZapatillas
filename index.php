@@ -18,7 +18,7 @@ $articulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <table>
     <tr>
-        <th>Imagen</th> <!-- NUEVA COLUMNA -->
+        <th>Imagen</th> <!-- imagen ultima hora -->
         <th>Nombre</th>
         <th>Marca</th>
         <th>Talla</th>

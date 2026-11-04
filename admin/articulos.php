@@ -45,7 +45,7 @@ $articulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="articulo_form.php?id=<?= $a['id'] ?>" class="btn">Editar</a>
             <a href="articulo_borrar.php?id=<?= $a['id'] ?>"
                class="btn btn-danger"
-               onclick="return confirm('Seguro que quieres borrar este articulo?');">
+               onclick="return confirmarBorrado('Seguro que quieres borrar este articulo?');">
                Borrar
             </a>
         </td>
