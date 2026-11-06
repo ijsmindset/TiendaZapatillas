@@ -31,8 +31,10 @@ $articulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- poniendo imagen-->
         <td style="width: 90px; text-align: center;">
             <?php if (!empty($a['imagen'])): ?>
-                <img src="<?= htmlspecialchars($a['imagen']) ?>" alt="<?= htmlspecialchars($a['nombre']) ?>" style="width: 70px; height: 70px; object-fit: contain; border-radius: 5px;">
+            <img src="<?= str_replace('/tienda_zapatillas', '', $a['imagen']) ?>" alt="<?= htmlspecialchars($a['nombre']) ?>" style="width: 70px; height: 70px; object-fit: contain; border-radius: 5px;">
+               
             <?php else: ?>
+            
                 <span style="color: #999; font-size: 12px;">Sin imagen</span>
             <?php endif; ?>
         </td>
